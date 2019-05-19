@@ -29,11 +29,21 @@ RSpec.describe PurchasesController, type: :controller do
   # Purchase. As you add validations to Purchase, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {
+      from_date: Time.now,
+      user_id: create(:user).id,
+      content_id: create(:movie).id,
+      purchase_option_id: create(:purchase_option).id
+    }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {
+      from_date: Time.now,
+      user_id: nil,
+      content_id: nil,
+      purchase_option_id: nil
+    }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -87,14 +97,22 @@ RSpec.describe PurchasesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          from_date: Time.now,
+          user_id: create(:user).id,
+          content_id: create(:movie).id,
+          purchase_option_id: create(:purchase_option).id
+        }
       }
 
       it "updates the requested purchase" do
         purchase = Purchase.create! valid_attributes
         put :update, params: {id: purchase.to_param, purchase: new_attributes}, session: valid_session
         purchase.reload
-        skip("Add assertions for updated state")
+        expect(purchase.from_date.utc.to_s).to eq(new_attributes[:from_date].utc.to_s)
+        expect(purchase.user_id).to eq(new_attributes[:user_id])
+        expect(purchase.content_id).to eq(new_attributes[:content_id])
+        expect(purchase.purchase_option_id).to eq(new_attributes[:purchase_option_id])
       end
 
       it "renders a JSON response with the purchase" do
