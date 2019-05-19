@@ -33,6 +33,8 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Factory Bot for creating factories for tests
   gem 'factory_bot_rails'
+  # Faker for fake data
+  gem 'faker'
   # Use RSpec for specs
   gem 'rspec-rails'
 end
