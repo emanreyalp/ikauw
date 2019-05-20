@@ -15,10 +15,14 @@ class PurchasesController < ApplicationController
 
   # POST /purchases
   def create
-    @purchase = Purchase.new(purchase_params)
+    http_status = nil
+    @purchase = Purchase.where(purchase_params).first_or_create do |purchase|
+      purchase.from_date = Time.now
+      http_status = purchase.new_record? ? :created : :ok
+    end
 
     if @purchase.save
-      render json: @purchase, status: :created, location: @purchase
+      render json: @purchase, status: http_status, location: @purchase
     else
       render json: @purchase.errors, status: :unprocessable_entity
     end
