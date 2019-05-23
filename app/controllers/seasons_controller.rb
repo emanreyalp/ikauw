@@ -3,9 +3,9 @@ class SeasonsController < ApplicationController
 
   # GET /seasons
   def index
-    @seasons = Season.all
+    @seasons = Season.all.order(:created_at)
 
-    render json: @seasons
+    render json: SeasonSerializer.new(@seasons, { include: [:episodes] }).serialized_json
   end
 
   # GET /seasons/1
