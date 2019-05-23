@@ -3,9 +3,9 @@ class MoviesController < ApplicationController
 
   # GET /movies
   def index
-    @movies = Movie.all
+    @movies = Movie.all.order(:created_at)
 
-    render json: @movies
+    render json: MovieSerializer.new(@movies)
   end
 
   # GET /movies/1

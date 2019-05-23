@@ -6,6 +6,7 @@ The structure following the [JSON API specifications](https://jsonapi.org/format
 ## Routes
 
 - [GET /seasons](#get-seasons)
+- [GET /movies](#get-movies)
 
 ## GET requests
 
@@ -56,6 +57,37 @@ Example response:
             "title":"Mother Night",
             "plot":"All right, Mr. DeMille, I'm ready for my closeup.",
             "number":5
+        }
+    }]
+}
+```
+
+### GET /movies
+**Return the movies ordered by creation.**
+
+Example request:
+```
+GET /movies
+```
+
+Example response:
+```
+{
+    "data":[{
+        "id":"1",
+        "type":"movie",
+        "attributes":{
+            "title":"The Cricket on the Hearth",
+            "plot":"Vel sapiente velit. Ut odit dolores.",
+            "created_at":"2019-05-19T16:00:23.039Z"
+        }
+    },{
+        "id":"2",
+        "type":"movie",
+        "attributes":{
+            "title":"The Skull Beneath the Skin",
+            "plot":"Distinctio assumenda exercitationem. Qui aut adipisci.",
+            "created_at":"2019-05-19T16:00:23.059Z"
         }
     }]
 }
