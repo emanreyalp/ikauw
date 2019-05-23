@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :season do
-    title { 'Season Title' }
-    plot { 'Mysterious plot' }
+    title { Faker::DcComics.title }
+    plot { Faker::Lorem.sentences(4).join(' ') }
   end
 end

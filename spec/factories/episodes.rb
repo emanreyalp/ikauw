@@ -2,9 +2,9 @@ FactoryBot.define do
   factory :episode do
     season
 
-    title { 'Episode Title' }
-    plot { 'A boring plot' }
+    title { Faker::Book.title }
+    plot { Faker::Movie.quote }
 
-    number { 1 }
+    sequence(:number) { |n| n }
   end
 end
