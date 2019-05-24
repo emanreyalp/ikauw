@@ -3,9 +3,9 @@ class ContentsController < ApplicationController
 
   # GET /contents
   def index
-    @contents = Content.all
+    @contents = Content.movies_and_seasons.all
 
-    render json: @contents
+    render json: ContentSerializer.new(@contents)
   end
 
   # GET /contents/1

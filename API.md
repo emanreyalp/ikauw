@@ -7,6 +7,7 @@ The structure following the [JSON API specifications](https://jsonapi.org/format
 
 - [GET /seasons](#get-seasons)
 - [GET /movies](#get-movies)
+- [GET /contents](#get-contents)
 
 ## GET requests
 
@@ -88,6 +89,37 @@ Example response:
             "title":"The Skull Beneath the Skin",
             "plot":"Distinctio assumenda exercitationem. Qui aut adipisci.",
             "created_at":"2019-05-19T16:00:23.059Z"
+        }
+    }]
+}
+```
+
+### GET /contents
+**Return both movies and seasons ordered by creation.**
+
+Example request:
+```
+GET /contents
+```
+
+Example response:
+```
+{
+    "data":[{
+        "id":"2384",
+        "type":"movie",
+        "attributes":{
+            "title":"Vanity Fair",
+            "plot":"Ad qui velit. Ratione qui accusamus.",
+            "created_at":"2019-05-24T05:37:54.893Z"
+        }
+    },{
+        "id":"2385",
+        "type":"season",
+        "attributes":{
+            "title":"Action Comics",
+            "plot":"Dignissimos temporibus atque. Pariatur qui officiis.",
+            "created_at":"2019-05-24T05:37:54.894Z"
         }
     }]
 }
