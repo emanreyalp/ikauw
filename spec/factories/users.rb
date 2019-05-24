@@ -4,9 +4,9 @@ FactoryBot.define do
   end
 
   trait :who_purchased_contents do
-    after(:build) do |user|
-      user.purchases << create(:purchase, content: create(:movie))
-      user.purchases << create(:purchase, content: create(:season, :with_episodes))
+    after(:create) do |user|
+      create(:purchase, content: create(:movie), user: user)
+      create(:purchase, content: create(:season, :with_episodes), user: user)
     end
   end
 end
