@@ -24,15 +24,20 @@ RSpec.describe 'Purchases', type: :request do
       expect(response.content_type).to eq('application/json')
     end
 
-    it 'should update purchase with exsisted data' do
+    it "can't purchase again if it's already exists" do
       exsisted_attributes = {
         user_id: purchase.user.id, # this have to be elsewhere
         content_id: purchase.content.id,
         purchase_option_id: purchase.purchase_option.id
       }
 
+      expect(Purchase.where(exsisted_attributes).count).to eq(1)
+
       post content_purchases_path(purchase.content.id), params: { purchase: exsisted_attributes }
-      expect(response).to have_http_status(:ok)
+
+      expect(Purchase.where(exsisted_attributes).count).to eq(1)
+
+      expect(response).to have_http_status(:not_acceptable)
       expect(response.content_type).to eq('application/json')
     end
   end

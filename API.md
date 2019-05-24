@@ -8,6 +8,7 @@ The structure following the [JSON API specifications](https://jsonapi.org/format
 - [GET /seasons](#get-seasons)
 - [GET /movies](#get-movies)
 - [GET /contents](#get-contents)
+- [POST /contens/<content_id>/purchase](#post-contents<content_id>purchase)
 
 ## GET requests
 
@@ -122,5 +123,24 @@ Example response:
             "created_at":"2019-05-24T05:37:54.894Z"
         }
     }]
+}
+```
+
+## POST requests
+
+### POST /contents/<content_id>/purchase
+**User can purchase of a content.**
+
+Parameters:
+ * `user_id`: Who do the purchase
+ * `content_id`: Which content what we want to purchase
+ * `purchase_option_id`: Whit which purchase option
+
+Example request:
+```
+POST /contents/2/purchase
+{
+    "user_id":"1"
+    "purchase_option_id":"2"
 }
 ```
