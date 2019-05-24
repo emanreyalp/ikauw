@@ -8,6 +8,7 @@ The structure following the [JSON API specifications](https://jsonapi.org/format
 - [GET /seasons](#get-seasons)
 - [GET /movies](#get-movies)
 - [GET /contents](#get-contents)
+- [GET /users/<user_id>]/library(#get-users<user_id>library)
 - [POST /contens/<content_id>/purchase](#post-contents<content_id>purchase)
 
 ## GET requests
@@ -121,6 +122,39 @@ Example response:
             "title":"Action Comics",
             "plot":"Dignissimos temporibus atque. Pariatur qui officiis.",
             "created_at":"2019-05-24T05:37:54.894Z"
+        }
+    }]
+}
+```
+
+### GET /users/<user_id>/library
+**Get the library of a user ordered by the remaining time to watch the content.**
+
+Example request:
+```
+GET /users/1/library
+```
+
+Example response:
+```
+{
+    "data":[{
+        "id":"3047",
+        "type":"library",
+        "attributes":{
+            "title":"The Millstone",
+            "plot":"Quod sint quae. Ea officia aut.",
+            "created_at":"2019-05-24T09:37:25.389Z",
+            "remaining_time":"2 days -01:59:59.614268"
+        }
+    }, {
+        "id":"3048",
+        "type":"library",
+        "attributes":{
+            "title":"The New Frontier",
+            "plot":"In minus sed. Optio beatae occaecati. Sit ut quibusdam. Quae corporis maiores.",
+            "created_at":"2019-05-24T09:37:25.399Z",
+            "remaining_time":"2 days -01:59:59.608541"
         }
     }]
 }
