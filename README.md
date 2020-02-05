@@ -4,7 +4,7 @@ This README would normally document whatever steps are necessary to get the
 application up and running.
 
 ## Requirements
-- Ruby 2.6.0
+- Ruby 2.7.0
 - Postgresql
 
 ## Read the API's documentation [here](API.md)
