@@ -28,21 +28,35 @@ RSpec.describe PurchasesController, type: :controller do
   # This should return the minimal set of attributes required to create a valid
   # Purchase. As you add validations to Purchase, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
+  let(:valid_purchase_attributes) {
     {
       from_date: Time.now,
       user_id: create(:user).id,
-      content_id: create(:movie).id,
       purchase_option_id: create(:purchase_option).id
     }
   }
 
-  let(:invalid_attributes) {
+  let(:invalid_purchase_attributes) {
     {
       from_date: Time.now,
       user_id: nil,
-      content_id: nil,
       purchase_option_id: nil
+    }
+  }
+
+  let!(:content) { create(:movie) }
+
+  let(:valid_params) {
+    {
+      content_id: content.id,
+      purchase: valid_purchase_attributes
+    }
+  }
+
+  let(:invalid_params) {
+    {
+      content_id: content.id,
+      purchase: invalid_purchase_attributes
     }
   }
 
@@ -51,97 +65,30 @@ RSpec.describe PurchasesController, type: :controller do
   # PurchasesController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #index" do
-    it "returns a success response" do
-      purchase = Purchase.create! valid_attributes
-      get :index, params: {}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
-  describe "GET #show" do
-    it "returns a success response" do
-      purchase = Purchase.create! valid_attributes
-      get :show, params: {id: purchase.to_param}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Purchase" do
         expect {
-          post :create, params: {purchase: valid_attributes}, session: valid_session
+          post :create, params: valid_params, session: valid_session
         }.to change(Purchase, :count).by(1)
       end
 
       it "renders a JSON response with the new purchase" do
+        post :create, params: valid_params, session: valid_session
 
-        post :create, params: {purchase: valid_attributes}, session: valid_session
         expect(response).to have_http_status(:created)
         expect(response.content_type).to eq('application/json')
-        expect(response.location).to eq(purchase_url(Purchase.last))
+        expect(response.body).to eq(Purchase.last.to_json)
       end
     end
 
     context "with invalid params" do
       it "renders a JSON response with errors for the new purchase" do
+        post :create, params: invalid_params, session: valid_session
 
-        post :create, params: {purchase: invalid_attributes}, session: valid_session
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq('application/json')
       end
     end
   end
-
-  describe "PUT #update" do
-    context "with valid params" do
-      let(:new_attributes) {
-        {
-          from_date: Time.now,
-          user_id: create(:user).id,
-          content_id: create(:movie).id,
-          purchase_option_id: create(:purchase_option).id
-        }
-      }
-
-      it "updates the requested purchase" do
-        purchase = Purchase.create! valid_attributes
-        put :update, params: {id: purchase.to_param, purchase: new_attributes}, session: valid_session
-        purchase.reload
-        expect(purchase.from_date.utc.to_s).to eq(new_attributes[:from_date].utc.to_s)
-        expect(purchase.user_id).to eq(new_attributes[:user_id])
-        expect(purchase.content_id).to eq(new_attributes[:content_id])
-        expect(purchase.purchase_option_id).to eq(new_attributes[:purchase_option_id])
-      end
-
-      it "renders a JSON response with the purchase" do
-        purchase = Purchase.create! valid_attributes
-
-        put :update, params: {id: purchase.to_param, purchase: valid_attributes}, session: valid_session
-        expect(response).to have_http_status(:ok)
-        expect(response.content_type).to eq('application/json')
-      end
-    end
-
-    context "with invalid params" do
-      it "renders a JSON response with errors for the purchase" do
-        purchase = Purchase.create! valid_attributes
-
-        put :update, params: {id: purchase.to_param, purchase: invalid_attributes}, session: valid_session
-        expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq('application/json')
-      end
-    end
-  end
-
-  describe "DELETE #destroy" do
-    it "destroys the requested purchase" do
-      purchase = Purchase.create! valid_attributes
-      expect {
-        delete :destroy, params: {id: purchase.to_param}, session: valid_session
-      }.to change(Purchase, :count).by(-1)
-    end
-  end
-
 end

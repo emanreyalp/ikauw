@@ -1,18 +1,4 @@
 class PurchasesController < ApplicationController
-  before_action :set_purchase, only: [:show, :update, :destroy]
-
-  # GET /purchases
-  def index
-    @purchases = Purchase.all
-
-    render json: @purchases
-  end
-
-  # GET /purchases/1
-  def show
-    render json: @purchase
-  end
-
   # POST /purchases
   def create
     @purchase = Purchase.where(purchase_params).first_or_initialize do |purchase|
@@ -22,34 +8,19 @@ class PurchasesController < ApplicationController
     http_status = @purchase.new_record? ? :created : :not_acceptable
 
     if @purchase.save
-      render json: @purchase, status: http_status, location: @purchase
+      render json: @purchase, status: http_status
     else
       render json: @purchase.errors, status: :unprocessable_entity
     end
-  end
-
-  # PATCH/PUT /purchases/1
-  def update
-    if @purchase.update(purchase_params)
-      render json: @purchase
-    else
-      render json: @purchase.errors, status: :unprocessable_entity
-    end
-  end
-
-  # DELETE /purchases/1
-  def destroy
-    @purchase.destroy
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_purchase
-      @purchase = Purchase.find(params[:id])
-    end
-
     # Only allow a trusted parameter "white list" through.
     def purchase_params
-      params.require(:purchase).permit(:user_id, :content_id, :purchase_option_id)
+      params.require(:purchase).permit(:user_id, :purchase_option_id).merge(content_id: content_id)
+    end
+
+    def content_id
+      params.require(:content_id)
     end
 end
