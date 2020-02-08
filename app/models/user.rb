@@ -11,4 +11,6 @@ class User < ApplicationRecord
       SQL
     end
   end
+
+  validates :email, presence: true
 end
