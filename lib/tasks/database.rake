@@ -49,7 +49,7 @@ namespace :db do
     7.times do
       Movie.create(
         title: Faker::Book.unique.title,
-        plot: Faker::Lorem.paragraph(2)
+        plot: Faker::Lorem.paragraph(sentence_count: 2)
       )
     end
   end
@@ -58,7 +58,7 @@ namespace :db do
     5.times do
       season = Season.create(
         title: Faker::DcComics.unique.title,
-        plot: Faker::Lorem.sentences(4).join(' ')
+        plot: Faker::Lorem.sentences(number: 4).join(' ')
       )
 
       3.times do |i|

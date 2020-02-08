@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :season do
     title { Faker::DcComics.title }
-    plot { Faker::Lorem.sentences(4).join(' ') }
+    plot { Faker::Lorem.sentences(number: 4).join(' ') }
   end
 
   trait :with_episodes do
