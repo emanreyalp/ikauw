@@ -8,7 +8,7 @@ RSpec.describe 'Library', type: :request do
     let(:user) { create(:user, :who_purchased_contents) }
 
     before do
-      get user_library_index_path(user.id)
+      get library_index_path(user_id: user.id)
     end
 
     it 'returns http success' do
@@ -28,7 +28,7 @@ RSpec.describe 'Library', type: :request do
       expect(json['data']).not_to be_empty
 
       travel_to(Time.now + Purchase::ACTIVATION_PERIOD_TIME + 1.second) do
-        get user_library_index_path(user.id)
+        get library_index_path(user_id: user.id)
         expect(response).to have_http_status(:success)
 
         json = JSON.parse(response.body)

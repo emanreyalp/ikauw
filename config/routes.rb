@@ -1,13 +1,11 @@
 Rails.application.routes.draw do
+  resources :seasons, only: :index
+  resources :movies, only: :index
   resources :purchases
-  resources :episodes
-  resources :seasons
-  resources :movies
   resources :contents do
     resources :purchases, only: :create
   end
-  resources :users do
-    resources :library, only: :index
   end
+  resources :library, only: :index
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
