@@ -1,11 +1,10 @@
 class PurchasesController < ApplicationController
   # POST /purchases
   def create
-    @purchase = Purchase.where(purchase_params).first_or_initialize do |purchase|
-      purchase.from_date = Time.now
-    end
+    @purchase = Purchase.where(purchase_params).first_or_initialize
+    @purchase.from_date = Time.now
 
-    http_status = @purchase.new_record? ? :created : :not_acceptable
+    http_status = @purchase.new_record? ? :created : :ok
 
     if @purchase.save
       render json: @purchase, status: http_status

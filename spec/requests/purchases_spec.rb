@@ -23,7 +23,7 @@ RSpec.describe 'Purchases', type: :request do
       expect(response.content_type).to eq('application/json')
     end
 
-    it "can't purchase again if it's already exists" do
+    it "renew a purchase again if it's already exists" do
       existed_attributes = {
         user_id: purchase.user.id,
         content_id: purchase.content.id,
@@ -35,7 +35,7 @@ RSpec.describe 'Purchases', type: :request do
       end
       expect_post_request.to_not change { Purchase.where(existed_attributes).count }
 
-      expect(response).to have_http_status(:not_acceptable)
+      expect(response).to have_http_status(:ok)
       expect(response.content_type).to eq('application/json')
     end
   end

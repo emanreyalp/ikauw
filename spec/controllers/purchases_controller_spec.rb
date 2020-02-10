@@ -90,5 +90,27 @@ RSpec.describe PurchasesController, type: :controller do
         expect(response.content_type).to eq('application/json')
       end
     end
+
+    context 'with exist purchase' do
+      it 'try renew it' do
+        freeze_time do
+          travel_to 3.days.ago
+
+          post :create, params: valid_params
+          expect(response).to have_http_status(:created)
+
+          purchase_id = JSON.parse(response.body)['id']
+          from_date_earlier = Purchase.find(purchase_id).from_date
+
+          travel_to Time.now + 3.days
+
+          post :create, params: valid_params
+          expect(response).to have_http_status(:ok)
+
+          from_date_now = Purchase.find(purchase_id).from_date
+          expect(from_date_earlier + 3.day).to eq(from_date_now)
+        end
+      end
+    end
   end
 end
