@@ -40,6 +40,8 @@ group :development, :test do
   gem 'faker'
   # Use RSpec for specs
   gem 'rspec-rails'
+
+  gem 'simplecov'
 end
 
 group :development do
