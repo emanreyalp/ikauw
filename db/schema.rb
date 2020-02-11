@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_08_175706) do
+ActiveRecord::Schema.define(version: 2020_02_10_134921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 2020_02_08_175706) do
     t.bigint "purchase_option_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "expiration_date"
     t.index ["content_id"], name: "index_purchases_on_content_id"
     t.index ["purchase_option_id"], name: "index_purchases_on_purchase_option_id"
     t.index ["user_id", "content_id", "purchase_option_id"], name: "index_purchases_on_user_id_content_id_and_purchase_option_id", unique: true
