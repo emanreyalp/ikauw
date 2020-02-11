@@ -30,7 +30,6 @@ RSpec.describe PurchasesController, type: :controller do
   # adjust the attributes here as well.
   let(:valid_purchase_attributes) {
     {
-      from_date: Time.now,
       user_id: create(:user).id,
       purchase_option_id: create(:purchase_option).id
     }
@@ -38,7 +37,6 @@ RSpec.describe PurchasesController, type: :controller do
 
   let(:invalid_purchase_attributes) {
     {
-      from_date: Time.now,
       user_id: nil,
       purchase_option_id: nil
     }
@@ -100,15 +98,15 @@ RSpec.describe PurchasesController, type: :controller do
           expect(response).to have_http_status(:created)
 
           purchase_id = JSON.parse(response.body)['id']
-          from_date_earlier = Purchase.find(purchase_id).from_date
+          expiration_date_earlier = Purchase.find(purchase_id).expiration_date
 
           travel_to Time.now + 3.days
 
           post :create, params: valid_params
           expect(response).to have_http_status(:ok)
 
-          from_date_now = Purchase.find(purchase_id).from_date
-          expect(from_date_earlier + 3.day).to eq(from_date_now)
+          expiration_date_now = Purchase.find(purchase_id).expiration_date
+          expect(expiration_date_earlier + 3.day).to eq(expiration_date_now)
         end
       end
     end

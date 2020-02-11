@@ -2,7 +2,7 @@ class PurchasesController < ApplicationController
   # POST /purchases
   def create
     @purchase = Purchase.where(purchase_params).first_or_initialize
-    @purchase.from_date = Time.now
+    @purchase.expiration_date = Time.now + Purchase::ACTIVATION_PERIOD_TIME
 
     http_status = @purchase.new_record? ? :created : :ok
 

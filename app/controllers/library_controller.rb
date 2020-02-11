@@ -1,8 +1,8 @@
 class LibraryController < ApplicationController
   def index
     user = User.find(params.require(:user_id))
-    @contents = user.contents.with_remaining_time
+    @purchases = user.purchases.active.order_by_expiration
 
-    render json: LibrarySerializer.new(@contents)
+    render json: LibraryContentSerializer.new(@purchases)
   end
 end

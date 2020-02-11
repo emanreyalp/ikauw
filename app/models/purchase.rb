@@ -1,10 +1,6 @@
 class Purchase < ApplicationRecord
-  scope :active_in_time, lambda { |activation_period_time|
-    where('from_date >= ?', Time.now - activation_period_time) }
-  scope :active, lambda { active_in_time(ACTIVATION_PERIOD_TIME) }
-  # Expiration calculated from create_at and ACTIVATION_PERIOD_TIME
-  # It enaugh to order by create_at
-  scope :ordered_by_expiration, lambda { order(:created_at) }
+  scope :active, -> { where('expiration_date > ?', Time.now) }
+  scope :order_by_expiration, -> { order(:expiration_date) }
 
   ACTIVATION_PERIOD_TIME = 2.day
 
@@ -14,6 +10,10 @@ class Purchase < ApplicationRecord
 
   validates_uniqueness_of :user_id, scope: [:content_id, :purchase_option_id]
   validate :not_episode
+
+  def remaining_time_in_days
+    (expiration_date - Time.now ) / 1.day
+  end
 
   private
 

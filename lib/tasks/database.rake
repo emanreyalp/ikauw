@@ -88,10 +88,10 @@ namespace :db do
       contents = Movie.last(2) + Season.last(2)
 
       contents.each do |content|
-        from_date = Time.now - Random.rand(4).hours
+        expiration_date = Time.now + Purchase::ACTIVATION_PERIOD_TIME - Random.rand(4).hours
 
         Purchase.create(
-          from_date: from_date,
+          expiration_date: expiration_date,
           user: user,
           content: content,
           purchase_option: PurchaseOption.all.sample
