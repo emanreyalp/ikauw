@@ -1,7 +1,6 @@
 class LibraryContentSerializer
   include FastJsonapi::ObjectSerializer
   cache_options enabled: true, cache_length: 12.hours
-  set_type :library_content
 
   attribute :title do |purchase|
     purchase.content.title
@@ -14,5 +13,8 @@ class LibraryContentSerializer
   end
   attribute :remaining_time_in_days do |purchase|
     purchase.remaining_time_in_days
+  end
+  attribute :type do |purchase|
+    purchase.content.type
   end
 end
