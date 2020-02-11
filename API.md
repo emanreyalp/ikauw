@@ -8,7 +8,7 @@ The structure following the [JSON API specifications](https://jsonapi.org/format
 - [GET /seasons](#get-seasons)
 - [GET /movies](#get-movies)
 - [GET /contents](#get-contents)
-- [GET /users/<user_id>]/library(#get-users<user_id>library)
+- [GET /library/?user_id=<user_id>](#get-users<user_id>library)(#library/?user_id=<user_id>)
 - [POST /contens/<content_id>/purchase](#post-contents<content_id>purchase)
 
 ## GET requests
@@ -113,7 +113,8 @@ Example response:
         "attributes":{
             "title":"Vanity Fair",
             "plot":"Ad qui velit. Ratione qui accusamus.",
-            "created_at":"2019-05-24T05:37:54.893Z"
+            "created_at":"2019-05-24T05:37:54.893Z",
+            "type":"movie"
         }
     },{
         "id":"2385",
@@ -121,18 +122,19 @@ Example response:
         "attributes":{
             "title":"Action Comics",
             "plot":"Dignissimos temporibus atque. Pariatur qui officiis.",
-            "created_at":"2019-05-24T05:37:54.894Z"
+            "created_at":"2019-05-24T05:37:54.894Z",
+            "type":"season"
         }
     }]
 }
 ```
 
-### GET /users/<user_id>/library
+### GET /library/?user_id=<user_id>
 **Get the library of a user ordered by the remaining time to watch the content.**
 
 Example request:
 ```
-GET /users/1/library
+GET library/?user_id=1
 ```
 
 Example response:
@@ -140,21 +142,23 @@ Example response:
 {
     "data":[{
         "id":"3047",
-        "type":"library",
+        "type":"library_content",
         "attributes":{
             "title":"The Millstone",
             "plot":"Quod sint quae. Ea officia aut.",
             "created_at":"2019-05-24T09:37:25.389Z",
-            "remaining_time":"2 days -01:59:59.614268"
+            "remaining_time_in_days":1.998139125804757,
+            "type":"Season"
         }
     }, {
         "id":"3048",
-        "type":"library",
+        "type":"librar_contenty",
         "attributes":{
             "title":"The New Frontier",
             "plot":"In minus sed. Optio beatae occaecati. Sit ut quibusdam. Quae corporis maiores.",
             "created_at":"2019-05-24T09:37:25.399Z",
-            "remaining_time":"2 days -01:59:59.608541"
+            "remaining_time_in_days":1.7091809973425787,
+            "type":"Season"
         }
     }]
 }
